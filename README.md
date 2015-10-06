@@ -20,4 +20,4 @@ Here are example calls to the analytic functions
 ```
 
 #Credit
-Used the [Underscore](http://underscorejs.org/) library.
+
