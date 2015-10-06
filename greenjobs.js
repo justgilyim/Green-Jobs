@@ -8,6 +8,7 @@
 /*globals _, greenjobs */
 /*exported testData, listIndustries, countyGreenJobs, jobswithKeyword*/
 var testData = greenjobs.splice(0, 10);
+
 /**
  * Returns true if passed record has an Industry field.
  * @param record      The record.
@@ -16,16 +17,31 @@ var testData = greenjobs.splice(0, 10);
 function hasIndustry(record){
   return record.hasOwnProperty("Industry");
 }
+
+/**
+ * Returns true if passed record has an empty Industry field
+ * @param record      The record.
+ * @returns {boolean} True if Industry field is present.
+ */
+function emptyIndustry(record){
+    return record["Industry"] !== "";
+}
+
 /**
  * Plucks greenjobs dataset for industries and delete duplicates
  * @param  The greenjobs dataset
  * @returns {*} Array of unique greenjob industries
  */
-function listIndustries(data){
-  if(!_.every(data, hasIndustry)){
-    throw new Error("No Industry field.")
+function listIndustries(data) {
+  if (!_.every(data, hasIndustry)) {
+    throw new Error("No Industry field.");
   }
-  return _.uniq(_.pluck(data, 'Industry'));
+  if (!_.every(data, emptyIndustry)) {
+    throw new Error("Industry field is empty");
+  }
+  else {
+    return _.uniq(_.pluck(data, 'Industry'));
+  }
 }
 
 /**

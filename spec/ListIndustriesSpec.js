@@ -13,9 +13,9 @@ describe("ListIndustry", function() {
     expect(function(){listIndustries(noIndustriesField);}).toThrowError("No Industry field.");
   });
 
-  var nonStringIndustry = testData.concat({"Industry":"bar"})
-  it("should throw an error when record has a non-string Industry field", function(){
-    expect(function(){listIndustries();}).toThrowError("Non-string Industry.")
-  }
+  var nonStringIndustry = testData.concat({"Industry":""})
+  it("should throw an error when record has an empty string for Industry field", function(){
+    expect(function(){listIndustries(nonStringIndustry);}).toThrowError("Industry field is empty");
+  });
 
 });
