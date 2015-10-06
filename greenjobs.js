@@ -8,13 +8,23 @@
 /*globals _, greenjobs */
 /*exported testData, listIndustries, countyGreenJobs, jobswithKeyword*/
 var testData = greenjobs.splice(0, 10);
-
+/**
+ * Returns true if passed record has an Industry field.
+ * @param record      The record.
+ * @returns {boolean} True if Industry field is present.
+ */
+function hasIndustry(record){
+  return record.hasOwnProperty("Industry");
+}
 /**
  * Plucks greenjobs dataset for industries and delete duplicates
  * @param  The greenjobs dataset
  * @returns {*} Array of unique greenjob industries
  */
 function listIndustries(data){
+  if(!_.every(data, hasIndustry)){
+    throw new Error("No Industry field.")
+  }
   return _.uniq(_.pluck(data, 'Industry'));
 }
 
@@ -40,6 +50,3 @@ function jobswithKeyword(data, keyword){
   return _.pluck(jobs, 'Job Title');
 }
 
-console.log(listIndustries(testData));
-console.log(countyGreenJobs(testData));
-console.log(jobswithKeyword(testData, 'PV'));
